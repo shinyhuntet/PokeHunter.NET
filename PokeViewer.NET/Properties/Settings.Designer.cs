@@ -298,5 +298,20 @@ namespace PokeViewer.NET.Properties {
                 this["DiscordUserName"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DiscordTimeZone
+        {
+            get
+            {
+                return ((string)(this["DiscordTimeZone"]));
+            }
+            set
+            {
+                this["DiscordTimeZone"] = value;
+            }
+        }
     }
 }

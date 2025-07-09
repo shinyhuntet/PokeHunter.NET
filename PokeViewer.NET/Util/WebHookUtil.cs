@@ -5,8 +5,6 @@ using PKHeX.Core;
 using PokeViewer.NET.SubForms;
 using static PokeViewer.NET.ViewerUtil;
 using static RaidCrawler.Core.Structures.Utils;
-using System.ComponentModel.DataAnnotations;
-using System.Drawing;
 
 namespace PokeViewer.NET.Util;
 
@@ -103,7 +101,7 @@ public static class WebHookUtil
         var gmax = GetGigantamaxEmoji(pk, Strings);
         var hasItem = pk.HeldItem != 0;
         var trainerID = GetTrainerID32(trainerInfo.TID16, trainerInfo.SID16);
-        var timezone = TimeZoneInfo.Local;
+        var timezone = string.IsNullOrEmpty(Settings.Default.DiscordTimeZone) ? TimeZoneInfo.Local : TimeZoneInfo.FindSystemTimeZoneById(Settings.Default.DiscordTimeZone);
         var DisplayTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timezone);
         var WebHook = new
         {
@@ -116,7 +114,7 @@ public static class WebHookUtil
                         title,
                         description = "Pokemon Info",
                         color = SetColor(pk),
-                        timestamp = DisplayTime.ToString("yyyy-MM-ddTHH:mm:ssZ") + "\nTimeZone: {timezone.DisplayName}",
+                        timestamp = DisplayTime.ToString("yyyy-MM-ddTHH:mm:ssZ") + $"\nTimeZone: {timezone.DisplayName}",
                         author = new
                         {                          
                             name  = (Ball)pk.Ball != Ball.None ? "Pokemon you've obtained" : "Wild Pokemon",
