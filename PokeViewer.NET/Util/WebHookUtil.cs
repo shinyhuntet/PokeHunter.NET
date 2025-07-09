@@ -103,6 +103,8 @@ public static class WebHookUtil
         var gmax = GetGigantamaxEmoji(pk, Strings);
         var hasItem = pk.HeldItem != 0;
         var trainerID = GetTrainerID32(trainerInfo.TID16, trainerInfo.SID16);
+        var timezone = TimeZoneInfo.Local;
+        var DisplayTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timezone);
         var WebHook = new
         {
             username = $"{(!string.IsNullOrEmpty(Settings.Default.DiscordUserName) ? Settings.Default.DiscordUserName : "PokeViewer.NET")}",
@@ -114,6 +116,7 @@ public static class WebHookUtil
                         title,
                         description = "Pokemon Info",
                         color = SetColor(pk),
+                        timestamp = DisplayTime.ToString("yyyy-MM-ddTHH:mm:ssZ") + "\nTimeZone: {timezone.DisplayName}",
                         author = new
                         {                          
                             name  = (Ball)pk.Ball != Ball.None ? "Pokemon you've obtained" : "Wild Pokemon",
@@ -121,7 +124,7 @@ public static class WebHookUtil
                         },
                         footer = new
                         {
-                            text = $"Trainer Info{Environment.NewLine}{(!string.IsNullOrEmpty(pk.OriginalTrainerName) ? $"OT:{pk.OriginalTrainerName} | TID:{pk.DisplayTID} | SID:{pk.DisplaySID}\nLanguage:{(LanguageID)pk.Language}" : $"OT:{trainerInfo.OT} | TID:{(pk.TrainerIDDisplayFormat == TrainerIDFormat.SixDigit ? trainerID % 1000000 : trainerInfo.TID16)} | SID:{(pk.TrainerIDDisplayFormat == TrainerIDFormat.SixDigit ? trainerID / 1000000 : trainerInfo.SID16)}\nLanguage:{(LanguageID)trainerInfo.Language}")}",
+                            text = $"Trainer Info{Environment.NewLine}{(!string.IsNullOrEmpty(pk.OriginalTrainerName) ? $"OT:{pk.OriginalTrainerName} | TID:{pk.DisplayTID} | SID:{pk.DisplaySID}\nLanguage: {(LanguageID)pk.Language}" : $"OT:{trainerInfo.OT} | TID:{(pk.TrainerIDDisplayFormat == TrainerIDFormat.SixDigit ? trainerID % 1000000 : trainerInfo.TID16)} | SID:{(pk.TrainerIDDisplayFormat == TrainerIDFormat.SixDigit ? trainerID / 1000000 : trainerInfo.SID16)}\nLanguage: {(LanguageID)trainerInfo.Language}")}",
                             icon_url = "https://raw.githubusercontent.com/kwsch/PKHeX/master/PKHeX.Drawing.PokeSprite/Resources/img/ball/_ball16.png"
                         },
                         thumbnail = new
