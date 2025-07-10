@@ -8,6 +8,9 @@ namespace PokeViewer.NET.SubForms
         public DiscordUtilForm((Color, Color) color)
         {
             InitializeComponent();
+            TimeZoneCombo.DataSource = TimeZoneInfo.GetSystemTimeZones();
+            TimeZoneCombo.DisplayMember = "DisplayName";
+            TimeZoneCombo.ValueMember = "Id";
             SetColors(color);
             SetBotPrefix(PrefixBox.SelectedIndex);
             LoadSavedSettings();
@@ -33,6 +36,10 @@ namespace PokeViewer.NET.SubForms
             DiscordIDText.ForeColor = fore;
             DiscordNameText.BackColor = back;
             DiscordNameText.ForeColor = fore;
+            TimeZoneCombo.BackColor = back;
+            TimeZoneCombo.ForeColor = fore;
+            TimeZoneLabel.BackColor = back;
+            TimeZoneLabel.ForeColor = fore;
             MessageText.BackColor = back;
             MessageText.ForeColor = fore;
             BotToken.BackColor = back;
@@ -54,6 +61,7 @@ namespace PokeViewer.NET.SubForms
             WebhookURLText.Text = Settings.Default.WebHook;
             DiscordIDText.Text = Settings.Default.UserDiscordID;
             DiscordNameText.Text = Settings.Default.DiscordUserName;
+            TimeZoneCombo.SelectedIndex = string.IsNullOrEmpty(Settings.Default.DiscordTimeZone) ? -1 : TimeZoneCombo.Items.Cast<TimeZoneInfo>().ToList().FindIndex(tz => tz.Id == Settings.Default.DiscordTimeZone);
             MessageText.Text = Settings.Default.PingMessage;
             BotToken.Text = Settings.Default.BotToken;
             PrefixBox.SelectedIndex = Settings.Default.BotPrefix;
@@ -96,6 +104,9 @@ namespace PokeViewer.NET.SubForms
             
             if (!string.IsNullOrEmpty(DiscordNameText.Text))
                 Settings.Default.DiscordUserName = DiscordNameText.Text;
+
+            if (TimeZoneCombo.SelectedIndex >= 0)
+                Settings.Default.DiscordTimeZone = TimeZoneCombo.Items.Cast<TimeZoneInfo>().ToList()[TimeZoneCombo.SelectedIndex].Id;
 
             if (!string.IsNullOrEmpty(MessageText.Text))
                 Settings.Default.PingMessage = MessageText.Text;

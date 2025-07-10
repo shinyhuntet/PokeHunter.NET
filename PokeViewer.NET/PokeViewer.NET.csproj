@@ -65,6 +65,13 @@
 		<Compile Update="SubForms\EventCodeEntrySWSH.cs">
 	    <SubType>Form</SubType>
 	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="SubForms\DiscordUtilForm.cs">
+			<SubType>Form</SubType>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
 	  <Compile Update="SubForms\MapViewBlueberry.cs" />
 	  <Compile Update="SubForms\FlagChanger.cs">
 	    <SubType>Form</SubType>

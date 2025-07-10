@@ -42,6 +42,8 @@
             SaveButton = new Button();
             DiscordName = new Label();
             DiscordNameText = new TextBox();
+            TimeZoneCombo = new ComboBox();
+            TimeZoneLabel = new Label();
             SuspendLayout();
             // 
             // PrefixBox
@@ -143,7 +145,7 @@
             // 
             // SaveButton
             // 
-            SaveButton.Location = new Point(276, 210);
+            SaveButton.Location = new Point(284, 225);
             SaveButton.Name = "SaveButton";
             SaveButton.Size = new Size(184, 36);
             SaveButton.TabIndex = 64;
@@ -168,11 +170,30 @@
             DiscordNameText.TabIndex = 67;
             DiscordNameText.TextAlign = HorizontalAlignment.Center;
             // 
+            // TimeZoneCombo
+            // 
+            TimeZoneCombo.FormattingEnabled = true;
+            TimeZoneCombo.Location = new Point(104, 189);
+            TimeZoneCombo.Name = "TimeZoneCombo";
+            TimeZoneCombo.Size = new Size(184, 23);
+            TimeZoneCombo.TabIndex = 68;
+            // 
+            // TimeZoneLabel
+            // 
+            TimeZoneLabel.AutoSize = true;
+            TimeZoneLabel.Location = new Point(36, 192);
+            TimeZoneLabel.Name = "TimeZoneLabel";
+            TimeZoneLabel.Size = new Size(59, 15);
+            TimeZoneLabel.TabIndex = 69;
+            TimeZoneLabel.Text = "TimeZone";
+            // 
             // DiscordUtilForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(726, 258);
+            ClientSize = new Size(726, 273);
+            Controls.Add(TimeZoneLabel);
+            Controls.Add(TimeZoneCombo);
             Controls.Add(DiscordNameText);
             Controls.Add(DiscordName);
             Controls.Add(UseWiFiProtocol);
@@ -213,5 +234,7 @@
         private Button SaveButton;
         private Label DiscordName;
         private TextBox DiscordNameText;
+        private ComboBox TimeZoneCombo;
+        private Label TimeZoneLabel;
     }
 }
