@@ -51,26 +51,49 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="NLog" Version="5.2.7" />
 	</ItemGroup>
+	
 	<ItemGroup>
 		<Compile Update="Properties\Resources.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Resources.resx</DependentUpon>
 		</Compile>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+		
+	<ItemGroup>
 		<Compile Update="Properties\Settings.Designer.cs">
 			<DesignTimeSharedInput>True</DesignTimeSharedInput>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Settings.settings</DependentUpon>
 		</Compile>
-		<Compile Update="SubForms\EventCodeEntrySWSH.cs">
-	    <SubType>Form</SubType>
-	  </Compile>
+		<None Update="App.config">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
 	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="SubForms\EventCodeEntrySWSH.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<EmbeddedResource Update="SubForms\EventCodeEntrySWSH.resx">
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+	</ItemGroup>
+
 	<ItemGroup>
 		<Compile Update="SubForms\DiscordUtilForm.cs">
 			<SubType>Form</SubType>
 		</Compile>
 	</ItemGroup>
+	
 	<ItemGroup>
 	  <Compile Update="SubForms\MapViewBlueberry.cs" />
 	  <Compile Update="SubForms\FlagChanger.cs">
@@ -80,22 +103,10 @@
 	    <SubType>Form</SubType>
 	  </Compile>
 	</ItemGroup>
+	
 	<ItemGroup>
-		<EmbeddedResource Update="Properties\Resources.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
 		<EmbeddedResource Update="SubForms\MapViewBlueberry.resx">
 			<SubType>Designer</SubType>
 		</EmbeddedResource>
-	</ItemGroup>
-	<ItemGroup>
-		<None Update="App.config">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
-		<None Update="Properties\Settings.settings">
-			<Generator>SettingsSingleFileGenerator</Generator>
-			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
-		</None>
-	</ItemGroup>
+	</ItemGroup>	
 </Project>
