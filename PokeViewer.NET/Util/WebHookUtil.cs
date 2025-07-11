@@ -102,9 +102,8 @@ public static class WebHookUtil
         var hasItem = pk.HeldItem != 0;
         var trainerID = GetTrainerID32(trainerInfo.TID16, trainerInfo.SID16);
         var timezone = string.IsNullOrEmpty(Settings.Default.DiscordTimeZone) ? TimeZoneInfo.Local : TimeZoneInfo.FindSystemTimeZoneById(Settings.Default.DiscordTimeZone);
-        var Date = DateTime.Now;
-        Date = TimeZoneInfo.ConvertTimeToUtc(Date);
-        var DisplayTime = TimeZoneInfo.ConvertTimeFromUtc(Date, timezone);
+        var Date = DateTimeOffset.UtcNow;        
+        var DisplayTime = TimeZoneInfo.ConvertTime(Date.DateTime, timezone);
         var WebHook = new
         {
             username = $"{(!string.IsNullOrEmpty(Settings.Default.DiscordUserName) ? Settings.Default.DiscordUserName : "PokeViewer.NET")}",
@@ -116,7 +115,7 @@ public static class WebHookUtil
                         title,
                         description = "Pokemon Info",
                         color = SetColor(pk),
-                        timestamp = Date.ToString("yyyy-MM-dd HH:mm:ss"),
+                        timestamp = DisplayTime.ToString("yyyy-MM-dd HH:mm:ss"),
                         author = new
                         {                          
                             name  = (Ball)pk.Ball != Ball.None ? "Pokemon you've obtained" : "Wild Pokemon",
