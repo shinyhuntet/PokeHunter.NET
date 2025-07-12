@@ -5,6 +5,7 @@ using PKHeX.Core;
 using PokeViewer.NET.SubForms;
 using static PokeViewer.NET.ViewerUtil;
 using static RaidCrawler.Core.Structures.Utils;
+using System.Globalization;
 
 namespace PokeViewer.NET.Util;
 
@@ -133,19 +134,19 @@ public static class WebHookUtil
                         fields = new List<object>
                         {
                             new { name = "Species               ", value = $"{ShinyEmoji(pk.IsShiny, pk.ShinyXor == 0)}{(Species)pk.Species}{Egg_Viewer.FormOutput(Strings, pk.Species, pk.Form, out _)} {GenderEmoji(pk.Gender)}", inline = true, },
-                            new { name = $"{(pk.IsEgg ? $"Egg Hatch Cycle {Emoji["Egg"]}               " : "")}", value = $"{(pk.IsEgg ? $"{pk.CurrentFriendship}" : "")}", inline = pk.IsEgg, },
                             new { name = $"{(!string.IsNullOrEmpty(teratype) ? "TeraType               " : "")}", value = $"{(!string.IsNullOrEmpty(teratype) ? $"{teratype}" : "")}", inline = !string.IsNullOrEmpty(teratype), },
-                            new { name = $"{(!string.IsNullOrEmpty(gmax) ? "Gigantamax               " : "")}", value = $"{(!string.IsNullOrEmpty(gmax) ? $"{gmax}" : "")}", inline = !string.IsNullOrEmpty(gmax), },
+                            new { name = $"{(!string.IsNullOrEmpty(gmax) ? "Gigantamax               " : "")}", value = $"{(!string.IsNullOrEmpty(gmax) ? $"{gmax}\n** **" : "")}", inline = !string.IsNullOrEmpty(gmax), },
+                            new { name = $"{(pk.IsEgg ? $"Egg Hatch Cycle {Emoji["Egg"]}               " : "")}", value = $"{(pk.IsEgg ? $"{pk.CurrentFriendship}" : "")}", inline = pk.IsEgg, },
                             new { name = "PID               ", value = $"{pk.PID:X}", inline = true, },
                             new { name = "EncryptionConstatnt               ", value = $"{pk.EncryptionConstant:X}", inline = true, },
-                            new { name = "Nature               ", value = $"{pk.Nature}", inline = true, },
-                            new { name = "Ability               ", value = $"{(Ability)pk.Ability}\n** **", inline = true, },
-                            new { name = "IVs               ", value = ivs, inline = true, },
+                            new { name = "Nature               ", value = $"{pk.Nature}\n** **", inline = true, },
+                            new { name = "Ability               ", value = $"{(Ability)pk.Ability}", inline = true, },
                             new { name = "Mark               ", value = $"{(!string.IsNullOrEmpty(MarkString) ? $"{MarkString}{EmojiMark}" : "None")}", inline = true, },
-                            new { name = "Scale               ", value = ScaleString(pk) , inline = true, },
-                            new { name = "Level               ", value = $"{pk.CurrentLevel}\n** **", inline = true, },
-                            new { name = $"{(hasItem ? "HeldItem               " : "")}", value = $"{( hasItem ? $"**{Strings.itemlist[pk.HeldItem]}**" : "")}", inline = hasItem, },
+                            new { name = "Scale               ", value = ScaleString(pk) + "\n** **" , inline = true, },
+                            new { name = "Level               ", value = $"{pk.CurrentLevel}", inline = true, },
                             new { name = "Moves               ", value = movestr, inline = true, },
+                            new { name = $"{(hasItem ? "HeldItem               " : "")}", value = $"{( hasItem ? $"**{Strings.itemlist[pk.HeldItem]}**" : "")}", inline = true, },
+                            new { name = "IVs               ", value = ivs, inline = true, },
                             new { name = "EVs               ", value = evs, inline = true, },
 
                         },
@@ -162,7 +163,8 @@ public static class WebHookUtil
 
     private static int SetColor(PKM pkm)
     {
-        return pkm.IsShiny && pkm.ShinyXor == 0 ? int.Parse("F1C40E", System.Globalization.NumberStyles.HexNumber) : pkm.IsShiny ? int.Parse("979C9F", System.Globalization.NumberStyles.HexNumber) : int.Parse("0F806A", System.Globalization.NumberStyles.HexNumber);
+        Color color = pkm.IsShiny && pkm.ShinyXor == 0 ? Color.Gold : pkm.IsShiny ? Color.LightGray : Color.Teal;
+        return int.Parse($"{color.R:X2}{color.G:X2}{color.B:X2}", NumberStyles.HexNumber);
     }
 
     private static string GetGigantamaxEmoji(PKM pk, GameStrings Strings)
